@@ -10,6 +10,7 @@
 
 using namespace std;
 
+//Andrea Planells y Katherine Lozano <3
 //http://stackoverflow.com/questions/26006370/g-does-not-include-files-it-says-it-includes-for-c11
 //Para compilar g++ -std=c++11 *.cpp
 
