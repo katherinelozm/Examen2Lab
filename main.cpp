@@ -24,7 +24,7 @@ void writeAlcohol(vector<Product*>);
 void writeLuxury(vector<Product*>);
 
 int main(int argc, char* argv[]){
-	cout<<"Welcome!"<<endl;
+	cout<<"Welcome!!!"<<endl;
 	vector<Product*> myproducts;
 	readScholar(myproducts);
 	readAlcohol(myproducts);
