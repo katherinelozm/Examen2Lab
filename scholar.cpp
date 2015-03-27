@@ -16,7 +16,7 @@ double Scholar::getRate() const{
 }
 
 double Scholar::getTax() const{
-	return (volume + weight) * rate;
+	return volume*rate;
 }
 
 string Scholar::toString() const{

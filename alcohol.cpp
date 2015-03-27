@@ -16,7 +16,7 @@ double Alcohol::getRate() const{
 }
 
 double Alcohol::getTax() const{
-	return volume * rate;
+	return (weight + volume) * rate;
 }
 
 string Alcohol::toString() const{
