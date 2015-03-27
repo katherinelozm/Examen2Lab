@@ -5,6 +5,8 @@
 #include "alcohol.h"
 #include "luxury.h"
 #include <vector>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -14,12 +16,21 @@ void PrintProducts(vector<Product*>&);
 bool isScholar(vector<Product*>, int);
 bool isAlcohol(vector<Product*>, int);
 bool isLuxury(vector<Product*>, int);
+void readScholar(vector<Product*>&);
+void readAlcohol(vector<Product*>&);
+void readLuxury(vector<Product*>&);
+void writeScholar(vector<Product*>);
+void writeAlcohol(vector<Product*>);
+void writeLuxury(vector<Product*>);
 
 int main(int argc, char* argv[]){
 	cout<<"Welcome!"<<endl;
 	vector<Product*> myproducts;
+	readScholar(myproducts);
+	readAlcohol(myproducts);
+	readLuxury(myproducts);
 	double ratescholar, ratealcohol, rateluxury;
-	cout<<"Welcome!\nPlease introduce the following:\n Rate for Scholar products: ";
+	cout<<"Please introduce the following:\n Rate for Scholar products: ";
 	cin>>ratescholar;
 	cout<<"Rate for Alcoholic products: ";
 	cin>>ratealcohol;
@@ -35,7 +46,9 @@ int main(int argc, char* argv[]){
 		option = menu();
 	}
 	cout<<"Have a good day!"<<endl;
-
+	writeScholar(myproducts);
+	writeAlcohol(myproducts);
+	writeLuxury(myproducts);
 	return 0;
 }
 
@@ -111,4 +124,190 @@ bool isLuxury(vector<Product*> products, int pos){
     } else {
         return false;
     }
+}
+
+void readScholar(vector<Product*>& products){
+    double price;
+    double volume;
+    double weight;
+    string client;
+    double rate;
+    ifstream file;
+    file.open("scholar.txt");
+    string line;
+    int cont;
+    if (file.is_open()) {
+        while (!file.eof() && getline(file, line)) {
+            cont = 0;
+            istringstream iss(line);
+            do{
+                string s;
+                iss >> s;
+                cont++;
+                if (cont == 1){
+                    price = stod(s);
+                } else if (cont == 2){
+                    volume = stod(s);
+                } else if (cont == 3){
+                    weight = stod(s);
+                } else if (cont == 4){
+                    client = s;
+                } else if (cont == 5){
+                    rate = stod(s);
+                }
+            } while (iss);
+            products.push_back(new Scholar(price, volume, weight, client, rate));
+        }
+    } else {
+        cout << "Can't recover data" << endl;
+    }
+    file.close();
+}
+
+void readAlcohol(vector<Product*>& products){
+    double price;
+    double volume;
+    double weight;
+    string client;
+    double rate;
+    ifstream file;
+    file.open("alcohol.txt");
+    string line;
+    int cont;
+    if (file.is_open()) {
+        while (!file.eof() && getline(file, line)) {
+            cont = 0;
+            istringstream iss(line);
+            do{
+                string s;
+                iss >> s;
+                cont++;
+                if (cont == 1){
+                    price = stod(s);
+                } else if (cont == 2){
+                    volume = stod(s);
+                } else if (cont == 3){
+                    weight = stod(s);
+                } else if (cont == 4){
+                    client = s;
+                } else if (cont == 5){
+                    rate = stod(s);
+                }
+            } while (iss);
+            products.push_back(new Alcohol(price, volume, weight, client, rate));
+        }
+    } else {
+        cout << "Can't recover data" << endl;
+    }
+    file.close();
+}
+
+void readLuxury(vector<Product*>& products){
+    double price;
+    double volume;
+    double weight;
+    string client;
+    double rate;
+    ifstream file;
+    file.open("luxury.txt");
+    string line;
+    int cont;
+    if (file.is_open()) {
+        while (!file.eof() && getline(file, line)) {
+            cont = 0;
+            istringstream iss(line);
+            do{
+                string s;
+                iss >> s;
+                cont++;
+                if (cont == 1){
+                    price = stod(s);
+                } else if (cont == 2){
+                    volume = stod(s);
+                } else if (cont == 3){
+                    weight = stod(s);
+                } else if (cont == 4){
+                    client = s;
+                } else if (cont == 5){
+                    rate = stod(s);
+                }
+            } while (iss);
+            products.push_back(new Luxury(price, volume, weight, client, rate));
+        }
+    } else {
+        cout << "Can't recover data" << endl;
+    }
+    file.close();
+}
+
+void writeScholar(vector<Product*> products){
+    ofstream file;
+    file.open("scholar.txt");
+    if (file.is_open()) {
+        for (int i = 0; i < products.size(); i++){
+            if (isScholar(products, i)){
+                file << dynamic_cast<Scholar*>(products[i])->getPrice();
+                file << " ";
+                file << dynamic_cast<Scholar*>(products[i])->getVolume();
+                file << " ";
+                file << dynamic_cast<Scholar*>(products[i])->getWeight();
+                file << " ";
+                file << dynamic_cast<Scholar*>(products[i])->getClient();
+                file << " ";
+                file << dynamic_cast<Scholar*>(products[i])->getRate();
+                file << "\n";
+            }
+        }
+    } else {
+        cout << "No se pueden escribir los datos" << endl;
+    }
+    file.close();
+}
+
+void writeAlcohol(vector<Product*> products){
+    ofstream file;
+    file.open("alcohol.txt");
+    if (file.is_open()) {
+        for (int i = 0; i < products.size(); i++){
+            if (isAlcohol(products, i)){
+                file << dynamic_cast<Alcohol*>(products[i])->getPrice();
+                file << " ";
+                file << dynamic_cast<Alcohol*>(products[i])->getVolume();
+                file << " ";
+                file << dynamic_cast<Alcohol*>(products[i])->getWeight();
+                file << " ";
+                file << dynamic_cast<Alcohol*>(products[i])->getClient();
+                file << " ";
+                file << dynamic_cast<Alcohol*>(products[i])->getRate();
+                file << "\n";
+            }
+        }
+    } else {
+        cout << "No se pueden escribir los datos" << endl;
+    }
+    file.close();
+}
+
+void writeLuxury(vector<Product*> products){
+    ofstream file;
+    file.open("luxury.txt");
+    if (file.is_open()) {
+        for (int i = 0; i < products.size(); i++){
+            if (isLuxury(products, i)){
+                file << dynamic_cast<Luxury*>(products[i])->getPrice();
+                file << " ";
+                file << dynamic_cast<Luxury*>(products[i])->getVolume();
+                file << " ";
+                file << dynamic_cast<Luxury*>(products[i])->getWeight();
+                file << " ";
+                file << dynamic_cast<Luxury*>(products[i])->getClient();
+                file << " ";
+                file << dynamic_cast<Luxury*>(products[i])->getRate();
+                file << "\n";
+            }
+        }
+    } else {
+        cout << "No se pueden escribir los datos" << endl;
+    }
+    file.close();
 }
