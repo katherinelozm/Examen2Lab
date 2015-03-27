@@ -10,6 +10,9 @@
 
 using namespace std;
 
+//http://stackoverflow.com/questions/26006370/g-does-not-include-files-it-says-it-includes-for-c11
+//Para compilar g++ -std=c++11 *.cpp
+
 int menu();
 void CreateProduct(vector<Product*>&,vector<string>,double,double,double);
 void PrintProducts(vector<Product*>&);
@@ -187,8 +190,6 @@ void readScholar(vector<Product*>& products){
             } while (iss);
             products.push_back(new Scholar(price, volume, weight, client, rate));
         }
-    } else {
-        cout << "Can't recover data" << endl;
     }
     file.close();
 }
@@ -225,8 +226,6 @@ void readAlcohol(vector<Product*>& products){
             } while (iss);
             products.push_back(new Alcohol(price, volume, weight, client, rate));
         }
-    } else {
-        cout << "Can't recover data" << endl;
     }
     file.close();
 }
@@ -263,8 +262,6 @@ void readLuxury(vector<Product*>& products){
             } while (iss);
             products.push_back(new Luxury(price, volume, weight, client, rate));
         }
-    } else {
-        cout << "Can't recover data" << endl;
     }
     file.close();
 }
