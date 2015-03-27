@@ -9,11 +9,11 @@
 using namespace std;
 
 int menu();
-void CreateProduct(vector<Products*>&);
+void CreateProduct(vector<Product*>&);
 
 int main(int argc, char* argv[]){
-
-	vector<Products*> myproducts;
+	int option = menu();
+	vector<Product*> myproducts;
 	while(option<3){
 		if(option==1){
 
@@ -33,10 +33,11 @@ int menu(){
 	return option;
 }
 
-void CreateProduct(vector<Products*>& myproducts){
+void CreateProduct(vector<Product*>& myproducts){
 	string client;
 	int option;
-	double price, volume, weight, type;
+	double price, volume, weight;
+	string type;
 	cout<<"Client: ";
 	cin>>client;
 	cout<<"Price: ";
