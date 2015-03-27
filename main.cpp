@@ -62,3 +62,27 @@ void CreateProduct(vector<Product*>& myproducts){
 	}
 
 }
+
+bool isScholar(vector<Product*> products, int pos){
+    if (Scholar* a = dynamic_cast<Scholar*>(products[pos])){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool isAlcohol(vector<Product*> products, int pos){
+    if (Alcohol* a = dynamic_cast<Alcohol*>(products[pos])){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool isLuxury(vector<Product*> products, int pos){
+    if (Luxury* a = dynamic_cast<Luxury*>(products[pos])){
+        return true;
+    } else {
+        return false;
+    }
+}
