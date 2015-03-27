@@ -11,8 +11,10 @@
 using namespace std;
 
 int menu();
-void CreateProduct(vector<Product*>&,double,double,double);
+void CreateProduct(vector<Product*>&,vector<string>,double,double,double);
 void PrintProducts(vector<Product*>&);
+void SentProducts(vector<Product*>&, vector<Product*>&);
+void readNames(vector<string>&);
 bool isScholar(vector<Product*>, int);
 bool isAlcohol(vector<Product*>, int);
 bool isLuxury(vector<Product*>, int);
@@ -24,32 +26,37 @@ void writeAlcohol(vector<Product*>);
 void writeLuxury(vector<Product*>);
 
 int main(int argc, char* argv[]){
-	cout<<"Welcome!"<<endl;
-	vector<Product*> myproducts;
-	readScholar(myproducts);
-	readAlcohol(myproducts);
-	readLuxury(myproducts);
-	double ratescholar, ratealcohol, rateluxury;
-	cout<<"Please introduce the following:\n Rate for Scholar products: ";
-	cin>>ratescholar;
-	cout<<"Rate for Alcoholic products: ";
-	cin>>ratealcohol;
-	cout<<"Rate for Luxury Products: ";
-	cin>>rateluxury;
-	int option = menu();
-	while(option<3){
-		if(option==1){
-			CreateProduct(myproducts,ratescholar,ratealcohol,rateluxury);
-		}else if(option==2){
-			PrintProducts(myproducts);
-		}
-		option = menu();
-	}
-	cout<<"Have a good day!"<<endl;
-	writeScholar(myproducts);
-	writeAlcohol(myproducts);
-	writeLuxury(myproducts);
-	return 0;
+	 cout<<"Welcome!"<<endl;
+    vector<Product*> myproducts;
+    vector<Product*> mysentproducts;
+    vector<string> names;
+    readScholar(mysentproducts);
+    readAlcohol(mysentproducts);
+    readLuxury(mysentproducts);
+    readNames(names);
+    double ratescholar, ratealcohol, rateluxury;
+    cout<<"Please introduce the following:\n Rate for Scholar products: ";
+    cin>>ratescholar;
+    cout<<"Rate for Alcoholic products: ";
+    cin>>ratealcohol;
+    cout<<"Rate for Luxury Products: ";
+    cin>>rateluxury;
+    int option = menu();
+    while(option<4){
+        if(option==1){
+            CreateProduct(myproducts,names,ratescholar,ratealcohol,rateluxury);
+        }else if(option==2){
+            SentProducts(myproducts,mysentproducts);
+        }else if(option==3){
+            PrintProducts(mysentproducts);
+        }
+        option = menu();
+    }
+    cout<<"Have a good day!"<<endl;
+    writeScholar(mysentproducts);
+    writeAlcohol(mysentproducts);
+    writeLuxury(mysentproducts);
+    return 0;
 }
 
 int menu(){
@@ -59,14 +66,19 @@ int menu(){
 	return option;
 }
 
-void CreateProduct(vector<Product*>& myproducts, double ratescholar, double ratealcohol, double rateluxury){
+void CreateProduct(vector<Product*>& myproducts, vector<string> names, double ratescholar, double ratealcohol, double rateluxury){
 	char ans;
 	do{
 		string client;
 		int option;
 		double price, volume, weight;
-		cout<<"Client: ";
-		cin>>client;
+		cout<<"Client: " << endl;
+		for (int i = 0; i < names.size(); i++){
+			cout << i+1 << ") " << names[i] << endl;
+		}
+		int c;
+		cin >> c;
+		client = names[c-1];
 		cout<<"Price: ";
 		cin>>price;
 		cout<<"Volume: ";
@@ -100,6 +112,21 @@ void PrintProducts(vector<Product*>& myproducts){
 		}
 		cout<< "Tax: " << myproducts.at(i)->getTax() << endl;
 	}
+}
+
+void SentProducts(vector<Product*>& myproducts, vector<Product*>& mysentproducts){
+    for(unsigned i=0; i<myproducts.size();i++){
+        cout<< i + 1 <<") "<< myproducts.at(i)->toString();
+    }
+    char ans;
+    int option;
+    do{
+        cin>>option;
+        mysentproducts.push_back(myproducts.at(option-1));
+        cout<<"Do you wish to send another product? Y/N"<<endl;
+        cin>>ans;
+    }while(ans == 'Y' || ans == 'y');
+
 }
 
 bool isScholar(vector<Product*> products, int pos){
@@ -308,6 +335,19 @@ void writeLuxury(vector<Product*> products){
         }
     } else {
         cout << "No se pueden escribir los datos" << endl;
+    }
+    file.close();
+}
+
+void readNames(vector<string>& names){
+    ifstream file;
+    file.open("names.txt");
+    string line;
+    int cont;
+    if (file.is_open()) {
+        while (!file.eof() && getline(file, line)) {
+            names.push_back(line);
+        }
     }
     file.close();
 }
