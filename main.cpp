@@ -60,7 +60,7 @@ int main(int argc, char* argv[]){
 }
 
 int menu(){
-	cout<<"Choose what you'd like to do:\n1)Add Product\n2)List Products\n3)Exit\n:";
+	cout<<"Choose what you'd like to do:\n1)Add Product\n2)Send Products\n3)List Products\n4)Exit\n:";
 	int option;
 	cin>>option;
 	return option;
@@ -93,7 +93,9 @@ void CreateProduct(vector<Product*>& myproducts, vector<string> names, double ra
 			myproducts.push_back(new Alcohol(price,volume,weight,client,ratealcohol));
 		}else if(option==3){
 			myproducts.push_back(new Luxury(price,volume,weight,client,rateluxury));
-		}
+		}else{
+            cout<<"Not created, invalid type"<<endl;
+        }
 		cout<<"Create another product? Y/N "<<endl;
 		cin>>ans;
 	}while(ans=='Y' || ans=='y');
