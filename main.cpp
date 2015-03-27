@@ -7,14 +7,12 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
-#include <cstdlib>
 
 using namespace std;
 
 int menu();
 void CreateProduct(vector<Product*>&,double,double,double);
 void PrintProducts(vector<Product*>&);
-void SentProducts(vector<Product*>&, vector<Product*>&s);
 bool isScholar(vector<Product*>, int);
 bool isAlcohol(vector<Product*>, int);
 bool isLuxury(vector<Product*>, int);
@@ -26,35 +24,32 @@ void writeAlcohol(vector<Product*>);
 void writeLuxury(vector<Product*>);
 
 int main(int argc, char* argv[]){
-    cout<<"Welcome!"<<endl;
-    vector<Product*> myproducts;
-    vector<Product*> mysentproducts;
-    readScholar(mysentproducts);
-    readAlcohol(mysentproducts);
-    readLuxury(mysentproducts);
-    double ratescholar, ratealcohol, rateluxury;
-    cout<<"Please introduce the following:\n Rate for Scholar products: ";
-    cin>>ratescholar;
-    cout<<"Rate for Alcoholic products: ";
-    cin>>ratealcohol;
-    cout<<"Rate for Luxury Products: ";
-    cin>>rateluxury;
-    int option = menu();
-    while(option<4){
-        if(option==1){
-            CreateProduct(myproducts,ratescholar,ratealcohol,rateluxury);
-        }else if(option==2){
-            SentProducts(myproducts,mysentproducts);
-        }else if(option==3){
-            PrintProducts(mysentproducts);
-        }
-        option = menu();
-    }
-    cout<<"Have a good day!"<<endl;
-    writeScholar(mysentproducts);
-    writeAlcohol(mysentproducts);
-    writeLuxury(mysentproducts);
-    return 0;
+	cout<<"Welcome!!!"<<endl;
+	vector<Product*> myproducts;
+	readScholar(myproducts);
+	readAlcohol(myproducts);
+	readLuxury(myproducts);
+	double ratescholar, ratealcohol, rateluxury;
+	cout<<"Please introduce the following:\n Rate for Scholar products: ";
+	cin>>ratescholar;
+	cout<<"Rate for Alcoholic products: ";
+	cin>>ratealcohol;
+	cout<<"Rate for Luxury Products: ";
+	cin>>rateluxury;
+	int option = menu();
+	while(option<3){
+		if(option==1){
+			CreateProduct(myproducts,ratescholar,ratealcohol,rateluxury);
+		}else if(option==2){
+			PrintProducts(myproducts);
+		}
+		option = menu();
+	}
+	cout<<"Have a good day!"<<endl;
+	writeScholar(myproducts);
+	writeAlcohol(myproducts);
+	writeLuxury(myproducts);
+	return 0;
 }
 
 int menu(){
@@ -105,21 +100,6 @@ void PrintProducts(vector<Product*>& myproducts){
 		}
 		cout<< "Tax: " << myproducts.at(i)->getTax() << endl;
 	}
-}
-
-void SentProducts(vector<Product*>& myproducts, vector<Product*>& mysentproducts){
-    for(unsigned i=0; i<myproducts.size();i++){
-        cout<< i + 1 <<") "<< myproducts.at(i)->toString();
-    }
-    char ans;
-    int option;
-    do{
-        cin>>option;
-        mysentproducts.push_back(myproducts.at(option-1));
-        cout<<"Do you wish to send another product? Y/N"<<endl;
-        cin>>ans;
-    }while(ans == 'Y' || ans == 'y');
-
 }
 
 bool isScholar(vector<Product*> products, int pos){
